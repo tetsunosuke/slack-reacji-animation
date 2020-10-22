@@ -2,9 +2,10 @@ require 'rmagick'
 
 include Magick
 
+text = ARGV[0]
+
 class EmojiImage
   attr_reader :path
-  text = "hogehoge"
 
   def initialize(text)
     f = Magick::Image.new(64, 64) do
@@ -23,6 +24,10 @@ class EmojiImage
       self.gravity = Magick::NorthGravity
     end
 
+    if text.length == 0
+      text = "space"
+    end
+
     @path = "#{text}.png"
     f.write(@path)
   end
@@ -35,6 +40,12 @@ list = ImageList.new
   list.concat(im)
   File.delete("#{chr}.png")
 }
+# create empty
+image = EmojiImage.new("")
+im = ImageList.new("space.png")
+list.concat(im)
+File.delete("space.png")
+
 list.delay = 25
 list.write("reacji-#{text}.gif")
 
