@@ -28,6 +28,10 @@ class EmojiImage
       text = "space"
     end
 
+    if text == " "
+       text = "space"
+    end
+
     @path = "#{text}.png"
     f.write(@path)
   end
@@ -36,6 +40,9 @@ end
 list = ImageList.new
 "→#{text}".chars.each { |chr|
   image = EmojiImage.new(chr)
+  if chr == " "
+    chr = "space"
+  end
   im = ImageList.new("#{chr}.png")
   list.concat(im)
   File.delete("#{chr}.png")
@@ -46,7 +53,7 @@ im = ImageList.new("space.png")
 list.concat(im)
 File.delete("space.png")
 
-list.delay = 25
+list.delay = 40
 list.write("reacji-#{text}.gif")
 
 
